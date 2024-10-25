@@ -1,11 +1,9 @@
 #!/bin/bash
 
-# เข้าไปในโฟลเดอร์ที่ Clone มา
-cd sms
-
 # อัปเดตและอัปเกรดแพ็กเกจ
 pkg update && pkg upgrade -y
 
+# ติดตั้ง termux-api
 pkg install termux-api -y
 
 # ติดตั้ง OpenSSL และไลบรารี Python
