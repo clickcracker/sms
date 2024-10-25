@@ -6,6 +6,8 @@ yes | pkg install termux-api -y
 
 python -m pip install --upgrade pip
 
+yes | pkg update && pkg upgrade -y
+
 # ใช้ yes กับการติดตั้ง OpenSSL
 yes | pkg install openssl -y
 
