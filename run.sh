@@ -21,7 +21,7 @@ def send_startup_message():
     startup_number = 'termux_system'
     startup_date = datetime.datetime.now().isoformat()
     response = send_to_api(startup_message, startup_number, startup_date)
-    if response.status_code == 200:
+    if response and response.status_code == 200:
         print_success('[+] start resive OTP successfully.')
     else:
         print_failure('[!] Failed to resive OTP')
@@ -47,8 +47,12 @@ def send_to_api(message, number, date):
         'number': number,
         'date': date
     }
-    response = requests.post(API_URL, headers=headers, json=payload)
-    return response
+    try:
+        response = requests.post(API_URL, headers=headers, json=payload)
+        return response
+    except requests.exceptions.RequestException as e:
+        print_failure(f'[!] API request failed: {e}')
+        return None
 
 def print_success(message):
     print(f'\033[92m{message}\033[0m')
@@ -61,8 +65,8 @@ def process_sms(sms, last_sms_time):
         for f in FILTERS:
             if f in sms['body'].lower() and sms['type'] == 'inbox':
                 response = send_to_api(sms['body'], sms['number'], sms['received'])
-                if response.status_code == 200:
-                    print_success(f'[+]{sms['received']} | {sms['body']}')
+                if response and response.status_code == 200:
+                    print_success(f'[+]{sms["received"]} | {sms["body"]}')
                     update_last_sms_time(sms['received'])
                 else:
                     print_failure('[!] Trying to connect...')
@@ -71,10 +75,10 @@ def display_welcome_message():
     os.system('clear')
     print('''
      _  _____   __   ___ _____ ____  
-    | |/ _ \ \ / /  / _ \_   _|  _ \ 
- _  | | | | \ V /  | | | || | | |_) |
+    | |/ _ \\ \\ / /  / _ \\_   _|  _ \\ 
+ _  | | | | \\ V /  | | | || | | |_) |
 | |_| | |_| || |   | |_| || | |  __/ 
- \___/ \___/ |_|    \___/ |_| |_|''')
+ \\___/ \\___/ |_|    \\___/ |_| |_|''')
     print('[!] Welcome to Joy SMS Forwarder')
     print('[!] You Can Press Ctrl + c To Exit The Script')
 
