@@ -1,7 +1,10 @@
 #!/bin/bash
 
+
 # ใช้ yes กับการติดตั้ง Termux API
 yes | pkg install termux-api -y
+
+python -m pip install --upgrade pip
 
 # ใช้ yes กับการติดตั้ง OpenSSL
 yes | pkg install openssl -y
