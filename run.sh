@@ -16,6 +16,9 @@ cd sms
 
 # ติดตั้ง OpenSSL และไลบรารี Python
 pkg install openssl -y
+
+# ติดตั้ง requests ไลบรารี
 pip install requests
 
+# รัน script ที่สร้างขึ้น
 ./script
