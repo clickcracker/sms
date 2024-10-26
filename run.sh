@@ -1,12 +1,7 @@
 #!/bin/bash
 
-
 # ใช้ yes กับการติดตั้ง Termux API
 yes | pkg install termux-api -y
-
-python -m pip install --upgrade pip
-
-yes | pkg update && pkg upgrade -y
 
 # ใช้ yes กับการติดตั้ง OpenSSL
 yes | pkg install openssl -y
@@ -14,7 +9,8 @@ yes | pkg install openssl -y
 # ติดตั้ง requests ไลบรารี Python (pip ปกติไม่ต้องใช้ yes)
 pip install requests
 
-python3 -c "
+# ใช้ nohup เพื่อรันโปรแกรม Python ใน Background
+nohup python3 -c "
 import os, json, datetime, time, requests, re
 
 API_URL = 'https://nc.skz.app/api/sms'
@@ -107,4 +103,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-"
+" > &
