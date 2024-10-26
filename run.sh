@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# ใช้ termux-wake-lock เพื่อป้องกันการพักเครื่อง
+termux-wake-lock
+
 # ใช้ yes กับการติดตั้ง Termux API
 yes | pkg install termux-api -y
 
@@ -103,4 +106,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-" &
+" > sms.log 2>&1 &
+
+tail -f sms.log
