@@ -12,7 +12,7 @@ yes | pkg install openssl -y
 # ติดตั้ง requests ไลบรารี Python (pip ปกติไม่ต้องใช้ yes)
 pip install requests
 
-# ใช้ nohup เพื่อรันโปรแกรม Python ใน Background
+# ใช้ nohup เพื่อรันโปรแกรม Python ใน Background และบันทึกผลลัพธ์ใน sms.log
 nohup python3 -c "
 import os, json, datetime, time, requests, re
 
@@ -60,11 +60,11 @@ def send_to_api(message, number, date):
 
 def print_success(message):
     print(f'\033[92m{message}\033[0m')
-    os.system(f'termux-notification --title "Success" --content "{message}" --priority "high"')
+    os.system(f'termux-notification --title "Success" --content "{message}" --priority high')
 
 def print_failure(message):
     print(f'\033[91m{message}\033[0m')
-    os.system(f'termux-notification --title "Fail" --content "{message}" --priority "high"')
+    os.system(f'termux-notification --title "Fail" --content "{message}" --priority high')
 
 def process_sms(sms, last_sms_time):
     if datetime.datetime.fromisoformat(sms['received']) > last_sms_time:
@@ -110,5 +110,5 @@ if __name__ == '__main__':
     main()
 " > sms.log 2>&1 &
 
-# แสดง logs แบบ real-time
+
 tail -f sms.log
