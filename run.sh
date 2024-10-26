@@ -59,9 +59,13 @@ def send_to_api(message, number, date):
 
 def print_success(message):
     print(f'\033[92m{message}\033[0m')
+    # ส่งการแจ้งเตือนผ่าน Termux เมื่อสำเร็จ
+    os.system(f\"termux-notification --title 'Success' --content '{message}'\")
 
 def print_failure(message):
     print(f'\033[91m{message}\033[0m')
+    # ส่งการแจ้งเตือนผ่าน Termux เมื่อเกิดข้อผิดพลาด
+    os.system(f\"termux-notification --title 'Failure' --content '{message}'\")
 
 def process_sms(sms, last_sms_time):
     if datetime.datetime.fromisoformat(sms['received']) > last_sms_time:
