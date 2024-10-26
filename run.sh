@@ -13,7 +13,7 @@ yes | pkg install openssl -y
 pip install requests
 
 # ใช้ nohup เพื่อรันโปรแกรม Python ใน Background
-nohup python3 sms.py &
+nohup python3 your_script.py > sms.log 2>&1 &
 
 # แสดง log แบบสด
 tail -f sms.log
